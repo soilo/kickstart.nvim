@@ -154,10 +154,10 @@ require('lazy').setup({
 
   {
     -- Theme inspired by Atom
-    'navarasu/onedark.nvim',
+    'catppuccin/nvim',
     priority = 1000,
     config = function()
-      vim.cmd.colorscheme 'onedark'
+      vim.cmd.colorscheme 'catppuccin'
     end,
   },
 
@@ -167,8 +167,8 @@ require('lazy').setup({
     -- See `:help lualine.txt`
     opts = {
       options = {
-        icons_enabled = false,
-        theme = 'onedark',
+        icons_enabled = true,
+        theme = 'catppuccin',
         component_separators = '|',
         section_separators = '',
       },
@@ -276,12 +276,24 @@ vim.o.termguicolors = true
 
 -- Show whitespaces
 vim.opt.list = true
-vim.opt.listchars.eol = "¬"
-vim.opt.listchars.tab=">"
-vim.opt.listchars.trail="~"
-vim.opt.listchars.extends=">"
-vim.opt.listchars.precedes="<"
-vim.opt.listchars.space="·"
+vim.opt.listchars.eol = '¬'
+vim.opt.listchars.tab= '>'
+vim.opt.listchars.trail= '~'
+vim.opt.listchars.extends= '>'
+vim.opt.listchars.precedes= '<'
+vim.opt.listchars.space= '·'
+
+-- Tab width
+vim.opt.tabstop = 4
+vim.opt.softtabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.expandtab = true
+
+-- Scroll offset
+vim.opt.scrolloff = 8
+
+-- Ruler
+vim.opt.colorcolumn = "80,120"
 
 -- [[ Basic Keymaps ]]
 
@@ -293,11 +305,23 @@ vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
+-- Center on move up and down
+vim.keymap.set('n', '<C-d>', '<C-d>zz')
+vim.keymap.set('n', '<C-u>', '<C-u>zz')
+vim.keymap.set('n', '<PageDown>', '<PageDown>zz')
+vim.keymap.set('n', '<PageUp>', '<PageUp>zz')
+
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
+
+-- Tmux navigator
+vim.keymap.set('n', 'C-h', '<cmd> TmuxNavigateLeft<CR>', { desc = 'Window left'})
+vim.keymap.set('n', 'C-l', '<cmd> TmuxNavigateRight<CR>', { desc = 'Window right'})
+vim.keymap.set('n', 'C-j', '<cmd> TmuxNavigateUp<CR>', { desc = 'Window up'})
+vim.keymap.set('n', 'C-k', '<cmd> TmuxNavigateDown<CR>', { desc = 'Window down'})
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
@@ -617,3 +641,4 @@ cmp.setup {
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
+
